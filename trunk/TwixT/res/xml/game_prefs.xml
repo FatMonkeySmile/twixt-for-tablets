@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+      android:key="category"
+      android:title="Preferences">
+    <ListPreference           
+       	android:title="Board Size"           
+       	android:summary="Change the board size. Default is 24 x 24."           
+       	android:key="sizePref"           
+       	android:defaultValue="24"           
+       	android:entries="@array/sizes"           
+       	android:entryValues="@array/sizes_values" />
+	<CheckBoxPreference 
+	    android:key="showGridPref"
+		android:title="Show guidelines on touch" 
+		android:defaultValue="true"
+		android:summary="Show line axis guidelines when placing pieces" />
+       	<!-- 
+	<CheckBoxPreference 
+	    android:key="fullscreenPref"
+		android:title="Full Screen" 
+		android:defaultValue="false"
+		android:summary="Take over the entire screen for the game" />
+	<CheckBoxPreference 
+	    android:key="nonRandomFirstPref"
+		android:title="First player is not random" 
+		android:defaultValue="false"
+		android:summary="First player is the same everytime" />
+	<CheckBoxPreference 
+	    android:key="darkFirstPref"
+		android:title="Dark moves first" 
+		android:defaultValue="true"
+		android:layout="?android:attr/preferenceLayoutChild"
+		android:dependency="nonRandomFirstPref" 
+		android:summary="Dark color moves first" />
+	<CheckBoxPreference 
+	    android:key="requireDragPref"
+		android:title="Drag pieces" 
+		android:defaultValue="true"
+		android:summary="Placing a piece requires dragging it from your side. If this is not checked, then simply tapping the screen will place a piece" />
+	<CheckBoxPreference 
+	    android:key="offsetTouchPref"
+		android:title="Touch is offset" 
+		android:defaultValue="false"
+		android:summary="Screen interaction will be offset from where you actually touch" />
+    <ListPreference           
+       	android:title="Theme"           
+       	android:summary="Change the look of the game"           
+       	android:key="themePref"           
+       	android:defaultValue="rb"           
+       	android:entries="@array/themes"           
+       	android:entryValues="@array/themes_values" /> 
+		 -->        
+    </PreferenceCategory>
+
+</PreferenceScreen>

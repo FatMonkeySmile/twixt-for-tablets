@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TwixT</string>
+    <string name="single_player_button">1 Player</string>
+    <string name="two_player_button">2 Players</string>
+
+    <string name="play_button">Play</string>
+
+    <string name="options_button">Options</string>
+    <string name="quit_button">Quit</string>
+    <string name="how_to_play_button">How to Play</string>
+    <string name="how_to_play_title">How to Play TwixT</string>
+    <string name="how_to_play_ok">   Back   </string>
+    <string name="about_button">About</string>
+    <string name="about_title">About TwixT</string>
+    <string name="about_ok">   Back   </string>
+</resources>
