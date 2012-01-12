@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical">
+    <ImageView android:src="@drawable/twixt" android:layout_alignParentTop="true" android:layout_marginBottom="25dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/imageView1"></ImageView>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_marginBottom="30dp" android:textAppearance="?android:attr/textAppearanceLarge" android:gravity="center_horizontal" android:text="@string/app_name"></TextView>
+    <Button android:id="@+id/button1" android:layout_height="wrap_content" android:layout_width="230dp" android:text="@string/single_player_button" android:layout_gravity="center_horizontal"></Button>
+    <Button android:id="@+id/button2" android:layout_height="wrap_content" android:layout_width="230dp" android:text="@string/two_player_button" android:layout_gravity="center_horizontal"></Button>
+    <!-- 
+    <Button android:id="@+id/buttonPlay" android:layout_height="wrap_content" android:layout_width="230dp" android:text="@string/play_button" android:layout_gravity="center_horizontal"></Button>
+ 	-->    
+    <Button android:id="@+id/button3" android:layout_height="wrap_content" android:layout_width="230dp" android:text="@string/options_button" android:layout_gravity="center_horizontal"></Button>
+    <Button android:id="@+id/button4" android:layout_height="wrap_content" android:layout_width="230dp" android:text="@string/how_to_play_button" android:layout_gravity="center_horizontal"></Button>
+    <Button android:id="@+id/button6" android:layout_height="wrap_content" android:layout_width="230dp" android:text="@string/about_button" android:layout_gravity="center_horizontal"></Button>
+    <Button android:id="@+id/button5" android:layout_height="wrap_content" android:text="@string/quit_button" android:layout_width="230dp" android:layout_gravity="center_horizontal"></Button>
+</LinearLayout>

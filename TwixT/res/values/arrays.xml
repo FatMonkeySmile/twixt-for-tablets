@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="themes">
+		<item>Red and Blue</item>
+		<item>Black and White</item>
+		<item>White Board</item>
+	</string-array>
+	<string-array name="themes_values">
+		<item>rb</item>
+		<item>bw</item>
+		<item>white</item>
+	</string-array>
+	<string-array name="sizes">
+		<item>12 x 12</item>
+		<item>18 x 18</item>
+		<item>24 x 24</item>
+		<item>30 x 30</item>
+		<item>36 x 36</item>
+	</string-array>
+	<string-array name="sizes_values">
+		<item>12</item>
+		<item>18</item>
+		<item>24</item>
+		<item>30</item>
+		<item>36</item>
+	</string-array>
+</resources>

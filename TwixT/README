@@ -1,0 +1,26 @@
+Copyright (C) 2012 TwixT for Tablets (http://code.google.com/p/twixt-for-tablets)
+ 
+TwixT for Tablets is an Android tablet version of the boardgame TwixT, a 
+two-player abstract game invented by Alex Randolph.
+It is released under version 3 of the GPL; see "COPYING" for the license text.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+
+As stated in individual files, this program uses open-source code from the following:
+Google Inc. (Apache License 2.0)
+T1j by Johannes Schwagereit (GNU GPL v3)
+
+CHANGES
+0.1
+Initial Version
+
+
+TODO
+Undo
+Shadow peg different (no future lines?)
+Paint quite a bit faster, esp. when re-painting during peg placement 
+Highlight last move (at least for AI's move)
