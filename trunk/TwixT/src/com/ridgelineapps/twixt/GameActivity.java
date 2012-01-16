@@ -48,6 +48,8 @@ public class GameActivity extends Activity implements OnTouchListener{
     
     int[] lastBoardPoint;
     
+    public static final int TOUCH_OFFSET = 100;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -127,7 +129,7 @@ public class GameActivity extends Activity implements OnTouchListener{
 //            int offset = 30;
             if(requireDrag) {
                 if(board.turn == 1) { // && event.getX() < view.translateToScreen(0, 0)[0]) {
-                	touchOffset = new PointF(100, 0);
+                	touchOffset = new PointF(TOUCH_OFFSET, 0);
 //                    RectF bounds = view.getSideBounds(1, offset);
 //                    if(bounds != null && bounds.contains(event.getX(), event.getY())) {
 //                        PointF peg = view.getStartingPosForOffboardPeg();
@@ -135,7 +137,7 @@ public class GameActivity extends Activity implements OnTouchListener{
 //                    }
                 }
                 if(board.turn == 2) { // && event.getX() > view.translateToScreen(board.size - 1, board.size - 1)[0]
-                	touchOffset = new PointF(-100, 0);
+                	touchOffset = new PointF(-TOUCH_OFFSET, 0);
 //                    RectF bounds = view.getSideBounds(2, offset);
 //                    if(bounds != null && bounds.contains(event.getX(), event.getY())) {
 //                        PointF peg = view.getStartingPosForOffboardPeg();
@@ -180,9 +182,10 @@ public class GameActivity extends Activity implements OnTouchListener{
                             board.setCursor(boardPoint[0], boardPoint[1]);
                         }
                     }
-                    view.setPlacingPegLoc(x, y, event.getX(), event.getY());
-                    board.setFutureLines(boardPoint[0], boardPoint[1]);
-                    view.invalidate();
+                    if(view.setPlacingPegLoc(x, y, event.getX(), event.getY())) {
+                    	board.setFutureLines(boardPoint[0], boardPoint[1]);
+                    	view.invalidate();
+                    }
                 }
             }
         }
@@ -194,7 +197,8 @@ public class GameActivity extends Activity implements OnTouchListener{
 
     public void cleanupPegDrawing() {
         touchOffset = null;
-        view.placingPegLoc = null;     
+        view.placingPegLoc = null;    
+        view.lastPlacingBoardLoc = null;
         view.shadowPegLoc = null;
         view.touch = null;
         board.hideCursor();

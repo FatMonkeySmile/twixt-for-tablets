@@ -20,6 +20,7 @@ package com.ridgelineapps.twixt;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
@@ -41,7 +42,11 @@ public class GameView extends View {
     Theme theme;
     
     PointF placingPegLoc;
+    int[] lastPlacingBoardLoc;
+    
+    static boolean DRAW_SHADOW_PEG = false;
     PointF shadowPegLoc;
+    
     PointF touch;
     
 	float upperLeftX;
@@ -181,9 +186,13 @@ public class GameView extends View {
                     }
                 }
             }
+            
+//            int buffer = (int) (scale * 3);
+//            Rect clip = new Rect((int) (peg.x - buffer), (int) (peg.y - buffer), (int) (peg.x + buffer), (int) (peg.y + buffer));
+//            canvas.clipRect(clip);
         }
         
-        if(shadowPegLoc != null) {
+        if(DRAW_SHADOW_PEG && shadowPegLoc != null) {
             if(touch == null || isYWithinBounds(touch.y)) {
             	theme.drawPegBeingPlaced(canvas, new float[]{ shadowPegLoc.x, shadowPegLoc.y });
             }
@@ -193,6 +202,13 @@ public class GameView extends View {
         if(board.cursor[0] >= 0) {
             float[] point = translateToScreen(board.cursor[0], board.cursor[1]);
             theme.drawCrosshairs(canvas, upperLeftX, upperLeftY, lowerRightX, lowerRightY, point[0], point[1]);
+            
+//            int buffer = (int) (scale / 2);
+//            Rect clip = new Rect((int) upperLeftX, (int) (point[1] - buffer), (int) lowerRightX, (int) (point[1] + buffer));
+//            canvas.clipRect(clip);
+//
+//            clip = new Rect((int) (point[0] - buffer), (int) upperLeftY, (int) (point[0] + buffer), (int) lowerRightY);
+//            canvas.clipRect(clip);
         }
     }
     
@@ -305,13 +321,19 @@ public class GameView extends View {
         return new float[]{screenX, screenY};
     }
 
-    public void setPlacingPegLoc(float x, float y, float origX, float origY) {
+    public boolean setPlacingPegLoc(float x, float y, float origX, float origY) {
         int[] boardLoc = translateToBoard(x, y);
         touch = new PointF(origX, origY);
         shadowPegLoc = new PointF(x, y);
         if(boardLoc != null && boardLoc[0] >= 0 && boardLoc[0] < board.size && boardLoc[1] >= 0 && boardLoc[1] < board.size) {
             float[] newLoc = translateToScreen(boardLoc[0], boardLoc[1]);
             placingPegLoc = new PointF(newLoc[0], newLoc[1]);
+            if(lastPlacingBoardLoc == null || lastPlacingBoardLoc[0] != boardLoc[0] || lastPlacingBoardLoc[1] != boardLoc[1]) {
+            	lastPlacingBoardLoc = boardLoc;
+            	return true;
+            }
         }
+
+        return (lastPlacingBoardLoc != null);
     }
 }
