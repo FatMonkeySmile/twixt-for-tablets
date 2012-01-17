@@ -68,6 +68,7 @@ public class GameActivity extends Activity implements OnTouchListener{
         //TODO
         boolean random = false; //true; //!prefs.getBoolean("nonRandomFirstPref", false);
         boolean blueFirst = true; //prefs.getBoolean("darkFirstPref", true);
+        boolean showLastPlacement = prefs.getBoolean("showLastPlacementPref", true);
         
         requireDrag = true; //prefs.getBoolean("requireDragPref", true);
         //offsetTouch = prefs.getBoolean("offsetTouchPref", false);
@@ -113,6 +114,7 @@ public class GameActivity extends Activity implements OnTouchListener{
         view = new GameView(this, board, theme);
         view.setOnTouchListener(this);
         view.setSystemUiVisibility(View.STATUS_BAR_HIDDEN); 
+        view.showLastPlacement = showLastPlacement;
         setContentView(view);
     }
     
