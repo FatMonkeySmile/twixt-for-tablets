@@ -20,7 +20,12 @@
 		android:title="Show last move" 
 		android:defaultValue="true"
 		android:summary="Show marker on latest peg placed" />
-		<!-- 
+	<CheckBoxPreference 
+	    android:key="offsetTouchPref"
+		android:title="Touch is offset" 
+		android:defaultValue="true"
+		android:summary="Screen interaction will be offset from where you actually touch" />
+			<!-- 
 	<CheckBoxPreference 
 	    android:key="fullscreenPref"
 		android:title="Full Screen" 
@@ -43,11 +48,6 @@
 		android:title="Drag pieces" 
 		android:defaultValue="true"
 		android:summary="Placing a piece requires dragging it from your side. If this is not checked, then simply tapping the screen will place a piece" />
-	<CheckBoxPreference 
-	    android:key="offsetTouchPref"
-		android:title="Touch is offset" 
-		android:defaultValue="false"
-		android:summary="Screen interaction will be offset from where you actually touch" />
     <ListPreference           
        	android:title="Theme"           
        	android:summary="Change the look of the game"           

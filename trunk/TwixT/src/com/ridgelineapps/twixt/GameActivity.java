@@ -39,7 +39,7 @@ public class GameActivity extends Activity implements OnTouchListener{
     Match match;
     boolean singlePlayer = false;
     
-    //boolean offsetTouch;
+    boolean offsetTouch;
     boolean requireDrag;
     
     boolean showCursor;
@@ -71,7 +71,7 @@ public class GameActivity extends Activity implements OnTouchListener{
         boolean showLastPlacement = prefs.getBoolean("showLastPlacementPref", true);
         
         requireDrag = true; //prefs.getBoolean("requireDragPref", true);
-        //offsetTouch = prefs.getBoolean("offsetTouchPref", false);
+        offsetTouch = prefs.getBoolean("offsetTouchPref", true);
         
         
         size = Integer.parseInt(sizeString);
@@ -131,20 +131,24 @@ public class GameActivity extends Activity implements OnTouchListener{
 //            int offset = 30;
             if(requireDrag) {
                 if(board.turn == 1) { // && event.getX() < view.translateToScreen(0, 0)[0]) {
-                	touchOffset = new PointF(TOUCH_OFFSET, 0);
+                	if(offsetTouch) {
+                		touchOffset = new PointF(TOUCH_OFFSET, 0);
 //                    RectF bounds = view.getSideBounds(1, offset);
 //                    if(bounds != null && bounds.contains(event.getX(), event.getY())) {
 //                        PointF peg = view.getStartingPosForOffboardPeg();
 //                        touchOffset = new PointF(peg.x - event.getX(), peg.y - event.getY());
 //                    }
+                	}
                 }
                 if(board.turn == 2) { // && event.getX() > view.translateToScreen(board.size - 1, board.size - 1)[0]
-                	touchOffset = new PointF(-TOUCH_OFFSET, 0);
+                	if(offsetTouch) {
+                		touchOffset = new PointF(-TOUCH_OFFSET, 0);
 //                    RectF bounds = view.getSideBounds(2, offset);
 //                    if(bounds != null && bounds.contains(event.getX(), event.getY())) {
 //                        PointF peg = view.getStartingPosForOffboardPeg();
 //                        touchOffset = new PointF(peg.x - event.getX(), peg.y - event.getY());
 //                    }
+                	}
                 }
             }
         }
