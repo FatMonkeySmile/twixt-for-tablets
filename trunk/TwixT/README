@@ -18,9 +18,7 @@ CHANGES
 0.1
 Initial Version
 
-
-TODO
-Triangle move indicator
-Offset or not in preferences
-Undo
-Paint quite a bit faster, esp. when re-painting during peg placement 
+0.2
+UI tweaks
+Single player
+Added About

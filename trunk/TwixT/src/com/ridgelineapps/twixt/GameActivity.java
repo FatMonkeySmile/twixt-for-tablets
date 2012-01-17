@@ -40,8 +40,6 @@ public class GameActivity extends Activity implements OnTouchListener{
     boolean singlePlayer = false;
     
     boolean offsetTouch;
-    boolean requireDrag;
-    
     boolean showCursor;
     
     PointF touchOffset;
@@ -70,7 +68,6 @@ public class GameActivity extends Activity implements OnTouchListener{
         boolean blueFirst = true; //prefs.getBoolean("darkFirstPref", true);
         boolean showLastPlacement = prefs.getBoolean("showLastPlacementPref", true);
         
-        requireDrag = true; //prefs.getBoolean("requireDragPref", true);
         offsetTouch = prefs.getBoolean("offsetTouchPref", true);
         
         
@@ -129,27 +126,25 @@ public class GameActivity extends Activity implements OnTouchListener{
         }
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
 //            int offset = 30;
-            if(requireDrag) {
-                if(board.turn == 1) { // && event.getX() < view.translateToScreen(0, 0)[0]) {
-                	if(offsetTouch) {
-                		touchOffset = new PointF(TOUCH_OFFSET, 0);
+            if(board.turn == 1) { // && event.getX() < view.translateToScreen(0, 0)[0]) {
+            	if(offsetTouch) {
+            		touchOffset = new PointF(TOUCH_OFFSET, 0);
 //                    RectF bounds = view.getSideBounds(1, offset);
 //                    if(bounds != null && bounds.contains(event.getX(), event.getY())) {
 //                        PointF peg = view.getStartingPosForOffboardPeg();
 //                        touchOffset = new PointF(peg.x - event.getX(), peg.y - event.getY());
 //                    }
-                	}
-                }
-                if(board.turn == 2) { // && event.getX() > view.translateToScreen(board.size - 1, board.size - 1)[0]
-                	if(offsetTouch) {
-                		touchOffset = new PointF(-TOUCH_OFFSET, 0);
+            	}
+            }
+            if(board.turn == 2) { // && event.getX() > view.translateToScreen(board.size - 1, board.size - 1)[0]
+            	if(offsetTouch) {
+            		touchOffset = new PointF(-TOUCH_OFFSET, 0);
 //                    RectF bounds = view.getSideBounds(2, offset);
 //                    if(bounds != null && bounds.contains(event.getX(), event.getY())) {
 //                        PointF peg = view.getStartingPosForOffboardPeg();
 //                        touchOffset = new PointF(peg.x - event.getX(), peg.y - event.getY());
 //                    }
-                	}
-                }
+            	}
             }
         }
         else if(event.getAction() == MotionEvent.ACTION_UP) {
@@ -162,12 +157,10 @@ public class GameActivity extends Activity implements OnTouchListener{
                 
                 if(!onEdge) {
                     System.out.println("::" + event);
-                    if(!requireDrag || touchOffset != null) {
-                        int[] boardPoint = lastBoardPoint; //view.translateToBoard(x, y);
-                        board.hideCursor();
-                        addPeg(boardPoint[0], boardPoint[1]);
-                        cleanupPegDrawing();
-                    }
+                    int[] boardPoint = lastBoardPoint; //view.translateToBoard(x, y);
+                    board.hideCursor();
+                    addPeg(boardPoint[0], boardPoint[1]);
+                    cleanupPegDrawing();
                 } else {
                     cleanupPegDrawing();
                 }
@@ -177,21 +170,19 @@ public class GameActivity extends Activity implements OnTouchListener{
         }
         else if(/*event.getAction() == MotionEvent.ACTION_DOWN || */ event.getAction() == MotionEvent.ACTION_MOVE) {
             if(board.winner == 0) {
-                if(!requireDrag || touchOffset != null) {
-                    int[] boardPoint = view.translateToBoard(x, y);
-                    lastBoardPoint = boardPoint;
-                    if(showCursor) {
-                        if(!view.isYWithinBounds(event.getY())) {
-                            board.hideCursor();
-                        }
-                        else {
-                            board.setCursor(boardPoint[0], boardPoint[1]);
-                        }
+                int[] boardPoint = view.translateToBoard(x, y);
+                lastBoardPoint = boardPoint;
+                if(showCursor) {
+                    if(!view.isYWithinBounds(event.getY())) {
+                        board.hideCursor();
                     }
-                    if(view.setPlacingPegLoc(x, y, event.getX(), event.getY())) {
-                    	board.setFutureLines(boardPoint[0], boardPoint[1]);
-                    	view.invalidate();
+                    else {
+                        board.setCursor(boardPoint[0], boardPoint[1]);
                     }
+                }
+                if(view.setPlacingPegLoc(x, y, event.getX(), event.getY())) {
+                	board.setFutureLines(boardPoint[0], boardPoint[1]);
+                	view.invalidate();
                 }
             }
         }
