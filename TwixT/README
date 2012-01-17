@@ -20,7 +20,8 @@ Initial Version
 
 
 TODO
+Triangle move indicator
+Offset or not in preferences
 Undo
-Shadow peg different (no future lines?)
 Paint quite a bit faster, esp. when re-painting during peg placement 
-Highlight last move (at least for AI's move)
+Highlight last move (at least for AI's move) -- put in preferences
