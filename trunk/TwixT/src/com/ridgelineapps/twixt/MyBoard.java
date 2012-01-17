@@ -55,8 +55,12 @@ public class MyBoard {
     public void sync(Board board) {
     	for(int x=0; x < size; x++) {
         	for(int y=0; y < size; y++) {
-        		int val = board.getPin(x, y);
-        		if(val == Board.YPLAYER) {
+        		int pin = board.getPin(x, y);
+        		int val = 0;
+        		if(pin == Board.XPLAYER) {
+        			val = 1;
+        		}
+        		else if(pin == Board.YPLAYER) {
         			val = 2;
         		}
         		if(val != pegs[x][y]) {
@@ -80,6 +84,10 @@ public class MyBoard {
         		}
         	}
     	}
+    	
+        if(checkGameOver((turn == 1)?2:1)) {
+            lightUpWinningConnection();
+        }
     }
     
     public void reset(boolean random, boolean blueFirst) {
@@ -312,13 +320,13 @@ public class MyBoard {
     	
     	for(int i=0; i < size; i++) {
     		if(player == 1) {
-    			if(trace(i, 0, player, false)) {
+    			if(trace(0, i, player, false)) {
     				winner = player;
     				break;
     			}
     		}
     		else if(player == 2) {
-    			if(trace(0, i, player, false)) {
+    			if(trace(i, 0, player, false)) {
     				winner = player;
     				break;
     			}
@@ -333,11 +341,11 @@ public class MyBoard {
     		return false;
     	}
     	
-		if(player == 1 && (x == 0 || x == size - 1)) {
+		if(player == 2 && (x == 0 || x == size - 1)) {
 			return false;
 		}
 		
-		if(player == 2 && (y == 0 || y == size - 1)) {
+		if(player == 1 && (y == 0 || y == size - 1)) {
 			return false;
 		}
 		
@@ -372,14 +380,14 @@ public class MyBoard {
     		return false;
     	}
 
-    	if(player == 1 && y == size - 1) {
+    	if(player == 2 && y == size - 1) {
     	    if(lightUpWinner) {
     	        winningPegs[x][y] = true;
     	    }
     		return true;
     	}
     	
-    	if(player == 2 && x == size - 1) {
+    	if(player == 1 && x == size - 1) {
             if(lightUpWinner) {
                 winningPegs[x][y] = true;
             }

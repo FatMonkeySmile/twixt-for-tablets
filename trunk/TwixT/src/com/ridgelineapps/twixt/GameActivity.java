@@ -20,6 +20,7 @@ package com.ridgelineapps.twixt;
 import java.util.Observable;
 import java.util.Observer;
 
+import net.schwagereit.t1j.GeneralSettings;
 import net.schwagereit.t1j.Match;
 import net.schwagereit.t1j.MatchData;
 import android.app.Activity;
@@ -38,15 +39,22 @@ public class GameActivity extends Activity implements OnTouchListener{
     GameView view;
     Match match;
     boolean singlePlayer = false;
+
+    boolean aiMoving = false;
+    boolean humanJustMoved = false;
     
     boolean offsetTouch;
     boolean showCursor;
     
     PointF touchOffset;
     
+    //TODO: set in prefs...
+    int humanPlayer = 1;
+    int aiPlayer = 2;
+    
     int[] lastBoardPoint;
     
-    public static final int TOUCH_OFFSET = 100;
+    public static final int TOUCH_OFFSET = 150;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +70,8 @@ public class GameActivity extends Activity implements OnTouchListener{
         String themeStr = prefs.getString("themePref", "rb");
         String sizeString = prefs.getString("sizePref", "24");
         showCursor = prefs.getBoolean("showGridPref", true);
-
-        //TODO
-        boolean random = false; //true; //!prefs.getBoolean("nonRandomFirstPref", false);
+        
+        boolean random = prefs.getBoolean("randomFirstPref", true);
         boolean blueFirst = true; //prefs.getBoolean("darkFirstPref", true);
         boolean showLastPlacement = prefs.getBoolean("showLastPlacementPref", true);
         
@@ -75,7 +82,32 @@ public class GameActivity extends Activity implements OnTouchListener{
         
         if(players == 1) {
         	singlePlayer = true;
-            board = new MyBoard(size, match, random, blueFirst);
+        	
+            if(prefs.getBoolean("advancedAIPref", false)) {
+            	try {
+	            	GeneralSettings.getInstance().mdFixedPly = false;
+	            	String timeStr = prefs.getString("aiTimePref", "5");
+            		GeneralSettings.getInstance().mdTime = Integer.parseInt(timeStr);
+            		GeneralSettings.getInstance().correct();
+            	}
+            	catch(Exception e) {
+            		e.printStackTrace();
+                	GeneralSettings.getInstance().mdFixedPly = true;
+            		GeneralSettings.getInstance().correct();
+            	}
+            }
+            else {
+            	GeneralSettings.getInstance().mdFixedPly = true;
+        		GeneralSettings.getInstance().correct();
+            }
+        	
+            boolean humanFirst = true;
+            if(random) {
+            	humanFirst = (Math.random() < 0.5);
+            }
+        	
+            board = new MyBoard(size, match, false, true);
+            board.turn = (humanFirst?1:2);
     		match = new Match();
 
     		MatchData matchData = new MatchData();
@@ -86,19 +118,39 @@ public class GameActivity extends Activity implements OnTouchListener{
     		matchData.mdXsize = size;
     		matchData.mdYhuman = false;
     		matchData.mdXhuman = true;
-    		matchData.mdYstarts = true;
+   			matchData.mdYstarts = !humanFirst;
     		matchData.mdPieRule = false;
-
+    		
     		match.addObserver(new Observer() {
     			@Override
     			public void update(Observable observable, Object data) {
+    				if(humanJustMoved) {
+    					board.turn = aiPlayer;
+    					humanJustMoved = false;
+    				} else {
+    					board.turn = humanPlayer;
+    					aiMoving = false;
+    				}
+    				int lastMove = match.getHighestMoveNr();
+    				if(lastMove > 0) {
+    					board.lastTurnX = match.getMoveX(lastMove);
+    					board.lastTurnY = match.getMoveY(lastMove);
+    				}
     				board.sync(match.getBoardDisplay());
     				if(view != null)
     					view.postInvalidate();
     			}
     		});
     		match.prepareNewMatch(matchData, false);
-//    		match.computeMove();
+    		
+    		if(!humanFirst) {
+	    		aiMoving = true;
+	    		humanJustMoved = false;
+				if(view != null)
+					view.postInvalidate();
+				match.computeMove();
+//		        match.evaluateAndUpdateGui();
+    		}
         }
         else {
         	singlePlayer = false;
@@ -116,7 +168,10 @@ public class GameActivity extends Activity implements OnTouchListener{
     }
     
     public boolean onTouch(View v, MotionEvent event) {
-//        System.out.println("touched:" + event.getX() + ", " + event.getY());
+    	if(singlePlayer && aiMoving) {
+    		return false;
+    	}
+    	
         float x = event.getX();
         float y = event.getY();
         
@@ -125,7 +180,6 @@ public class GameActivity extends Activity implements OnTouchListener{
             y += touchOffset.y;
         }
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-//            int offset = 30;
             if(board.turn == 1) { // && event.getX() < view.translateToScreen(0, 0)[0]) {
             	if(offsetTouch) {
             		touchOffset = new PointF(TOUCH_OFFSET, 0);
@@ -150,14 +204,8 @@ public class GameActivity extends Activity implements OnTouchListener{
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             if(lastBoardPoint != null) {
                 // Handle moving off the screen, is there a better way?
-                boolean onEdge = false;
-                if(!view.isYWithinBounds(event.getY())) {
-                    onEdge = true;
-                }
-                
-                if(!onEdge) {
-                    System.out.println("::" + event);
-                    int[] boardPoint = lastBoardPoint; //view.translateToBoard(x, y);
+                if(view.isYWithinBounds(event.getY())) {
+                    int[] boardPoint = lastBoardPoint; // Use the last location from move rather from this event since the UI shows that location as the peg placement.
                     board.hideCursor();
                     addPeg(boardPoint[0], boardPoint[1]);
                     cleanupPegDrawing();
@@ -168,7 +216,7 @@ public class GameActivity extends Activity implements OnTouchListener{
             
             lastBoardPoint = null;
         }
-        else if(/*event.getAction() == MotionEvent.ACTION_DOWN || */ event.getAction() == MotionEvent.ACTION_MOVE) {
+        else if(event.getAction() == MotionEvent.ACTION_MOVE) {
             if(board.winner == 0) {
                 int[] boardPoint = view.translateToBoard(x, y);
                 lastBoardPoint = boardPoint;
@@ -189,6 +237,7 @@ public class GameActivity extends Activity implements OnTouchListener{
         else if(event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             cleanupPegDrawing();
         } 
+        
         return true;
     }
 
@@ -208,10 +257,13 @@ public class GameActivity extends Activity implements OnTouchListener{
     		board.addPeg(x, y, false);
     	}
     	else {
-	        match.setlastMove(x, y);
-	        board.sync(match.getBoardDisplay());
-	        
-	        match.evaluateAndUpdateGui();
+    		if(board.isValid(x, y, humanPlayer)) {
+    			System.out.println("addPeg:" + x + ", " + y);
+	    		aiMoving = true;
+	    		humanJustMoved = true;
+		        match.setlastMove(x, y);
+		        match.evaluateAndUpdateGui();
+    		}
     	}
     }
 }

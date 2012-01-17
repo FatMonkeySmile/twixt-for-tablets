@@ -81,11 +81,11 @@ public class GameView extends View {
             theme.drawPrompt(canvas, bounds, board.turn);
         }
 
-        theme.drawBorderLine(canvas, new float[]{ upperLeftX, upperLeftY }, new float[]{ lowerRightX, upperLeftY }, 1);
-        theme.drawBorderLine(canvas, new float[]{ upperLeftX, lowerRightY }, new float[]{ lowerRightX, lowerRightY }, 1);
+        theme.drawBorderLine(canvas, new float[]{ upperLeftX, upperLeftY }, new float[]{ lowerRightX, upperLeftY }, 2);
+        theme.drawBorderLine(canvas, new float[]{ upperLeftX, lowerRightY }, new float[]{ lowerRightX, lowerRightY }, 2);
         
-        theme.drawBorderLine(canvas, new float[]{ upperLeftX, upperLeftY }, new float[]{ upperLeftX, lowerRightY }, 2);
-        theme.drawBorderLine(canvas, new float[]{ lowerRightX, upperLeftY }, new float[]{ lowerRightX, lowerRightY }, 2);
+        theme.drawBorderLine(canvas, new float[]{ upperLeftX, upperLeftY }, new float[]{ upperLeftX, lowerRightY }, 1);
+        theme.drawBorderLine(canvas, new float[]{ lowerRightX, upperLeftY }, new float[]{ lowerRightX, lowerRightY }, 1);
         
         // draw lines
         for(int x=0; x < board.size; x++) {
@@ -112,7 +112,7 @@ public class GameView extends View {
 		                theme.drawLine(canvas, point, point2, p, false);
 		                
 	                    if(board.winner != 0 && (!board.winningPegs[x][y] || !board.winningPegs[x2][y2])) {
-	                        theme.darkenLine(canvas, point, point2, p);
+	                        //theme.darkenLine(canvas, point, point2, p);
 	                    }
             		}
             	}
@@ -143,7 +143,7 @@ public class GameView extends View {
                         theme.drawLine(canvas, point, point2, p, true);
                         
                         if(board.winner != 0 && (!board.winningPegs[x][y] || !board.winningPegs[x2][y2])) {
-                            theme.darkenLine(canvas, point, point2, p);
+                            //theme.darkenLine(canvas, point, point2, p);
                         }
                     }
                 }
@@ -164,6 +164,7 @@ public class GameView extends View {
                 int p = board.pegs[x][y];
             	if(p != 0) {
             		boolean darken = (board.winner != 0 && !board.winningPegs[x][y]);
+            		darken = false;
             		theme.drawPeg(canvas, point, p, darken);
             	}
             }
@@ -213,8 +214,11 @@ public class GameView extends View {
         }
         
         if(board.winner == 0 && showLastPlacement && board.lastTurnX != -1 && board.lastTurnY != -1) {
-            float[] point = translateToScreen(board.lastTurnX, board.lastTurnY);
-            theme.drawLastPlacement(canvas, point[0], point[1]);
+        	int p = board.pegs[board.lastTurnX][board.lastTurnY];
+        	if(p > 0) {
+	            float[] point = translateToScreen(board.lastTurnX, board.lastTurnY);
+	            theme.drawLastPlacement(canvas, point[0], point[1], p);
+        	}
         }
     }
     
@@ -339,7 +343,14 @@ public class GameView extends View {
             	return true;
             }
         }
-
+        else {
+        	if(lastPlacingBoardLoc != null) {
+        		placingPegLoc = null;
+	        	lastPlacingBoardLoc = null;
+	        	return true;
+        	}
+        }
+        
         return (lastPlacingBoardLoc != null);
     }
 }

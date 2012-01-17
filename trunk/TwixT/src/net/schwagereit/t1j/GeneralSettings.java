@@ -15,12 +15,12 @@ public class GeneralSettings
 {
    private static final GeneralSettings ourInstance = new GeneralSettings();
 
-   boolean mdFixedPly = true;
+   public boolean mdFixedPly = true;
 
    private static final int DEFAULT_PLY = 5;
 
-   int mdPly = DEFAULT_PLY; // searchdepth
-   int mdTime = DEFAULT_PLY; // alternatively: time per computer-move
+   public int mdPly = DEFAULT_PLY; // searchdepth
+   public int mdTime = DEFAULT_PLY; // alternatively: time per computer-move
 
    /**
     * Return the GeneralSettings-Object.
@@ -42,11 +42,6 @@ public class GeneralSettings
       mdPly = userPrefs.getInt("Ply", DEFAULT_PLY);
       mdTime = userPrefs.getInt("Time", DEFAULT_PLY);
       
-      
-      //TODOX
-//      mdTime = 2;
-//      mdFixedPly = false;
-      
       correct();
    }
 
@@ -64,7 +59,7 @@ public class GeneralSettings
    /**
     * Correct any illegal data.
     */
-   private void correct()
+   public void correct()
    {
       if (mdPly < 1)
       {
