@@ -15,7 +15,12 @@
 		android:title="Show guidelines on touch" 
 		android:defaultValue="true"
 		android:summary="Show line axis guidelines when placing pieces" />
-       	<!-- 
+	<CheckBoxPreference 
+	    android:key="showLastPlacementPref"
+		android:title="Show last move" 
+		android:defaultValue="true"
+		android:summary="Show marker on latest peg placed" />
+		<!-- 
 	<CheckBoxPreference 
 	    android:key="fullscreenPref"
 		android:title="Full Screen" 

@@ -20,7 +20,6 @@ package com.ridgelineapps.twixt;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
@@ -48,6 +47,8 @@ public class GameView extends View {
     PointF shadowPegLoc;
     
     PointF touch;
+    
+    boolean showLastPlacement = true;
     
 	float upperLeftX;
 	float upperLeftY;
@@ -209,6 +210,11 @@ public class GameView extends View {
 //
 //            clip = new Rect((int) (point[0] - buffer), (int) upperLeftY, (int) (point[0] + buffer), (int) lowerRightY);
 //            canvas.clipRect(clip);
+        }
+        
+        if(board.winner == 0 && showLastPlacement && board.lastTurnX != -1 && board.lastTurnY != -1) {
+            float[] point = translateToScreen(board.lastTurnX, board.lastTurnY);
+            theme.drawLastPlacement(canvas, point[0], point[1]);
         }
     }
     

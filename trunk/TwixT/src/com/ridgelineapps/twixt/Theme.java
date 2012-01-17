@@ -44,6 +44,8 @@ public class Theme {
     private Paint playerPaint[];
     private Paint[][] glow;
     
+    private Paint lastPlacementPaint;
+    
     private int lineThickness = 1;
     
 //    private int cursorRadius = 15;
@@ -60,6 +62,11 @@ public class Theme {
         darkenPaint.setAntiAlias(true);
         darkenPaint.setARGB(180, 0, 0, 0);
         darkenPaint.setStrokeWidth(5f);
+        
+        lastPlacementPaint = new Paint();
+        lastPlacementPaint.setAntiAlias(true);
+        lastPlacementPaint.setARGB(255, 240, 240, 240);
+        lastPlacementPaint.setStrokeWidth(2f);
         
         if(key.equals("bw")) {
             int color = 255;
@@ -439,6 +446,12 @@ public class Theme {
     public void drawCrosshairs(Canvas canvas, float upperLeftX, float upperLeftY, float lowerRightX, float lowerRightY, float crosshairX, float crosshairY) {
         canvas.drawLine(upperLeftX, crosshairY, lowerRightX, crosshairY, cursorPaint);
         canvas.drawLine(crosshairX, upperLeftY, crosshairX, lowerRightY, cursorPaint);
+    }
+    
+    public void drawLastPlacement(Canvas canvas, float x, float y) {
+        int halfLine = pegRadius + 1;
+        canvas.drawLine(x, y - halfLine, x, y + halfLine, lastPlacementPaint);
+        canvas.drawLine(x - halfLine, y, x + halfLine, y, lastPlacementPaint);
     }
     
     public void drawPrompt(Canvas canvas, RectF rect, int p) {
