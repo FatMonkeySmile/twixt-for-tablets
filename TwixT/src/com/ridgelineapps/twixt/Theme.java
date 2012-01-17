@@ -44,7 +44,7 @@ public class Theme {
     private Paint playerPaint[];
     private Paint[][] glow;
     
-    private Paint lastPlacementPaint;
+    private Paint[] lastPlacementPaint;
     
     private int lineThickness = 1;
     
@@ -63,11 +63,17 @@ public class Theme {
         darkenPaint.setARGB(180, 0, 0, 0);
         darkenPaint.setStrokeWidth(5f);
         
-        lastPlacementPaint = new Paint();
-        lastPlacementPaint.setAntiAlias(true);
-        lastPlacementPaint.setARGB(255, 240, 240, 240);
-        lastPlacementPaint.setStrokeWidth(2f);
+        lastPlacementPaint = new Paint[3];
+        lastPlacementPaint[1] = new Paint();
+        lastPlacementPaint[1].setAntiAlias(true);
+        lastPlacementPaint[1].setARGB(190, 240, 240, 240);
+        lastPlacementPaint[1].setStrokeWidth(2f);
+        lastPlacementPaint[2] = new Paint();
+        lastPlacementPaint[2].setAntiAlias(true);
+        lastPlacementPaint[2].setARGB(190, 15, 15, 15);
+        lastPlacementPaint[2].setStrokeWidth(2f);
         
+        //TODO: turn back on themes
         if(key.equals("bw")) {
             int color = 255;
             int offset = 0;
@@ -135,6 +141,27 @@ public class Theme {
 //            backgroundPaint.setARGB(255, 70, 70, 70);
             backgroundPaint.setARGB(255, 10, 10, 10);
             
+            promptPaint = new Paint[3];
+            promptPaint[1] = new Paint();
+            promptPaint[1].setAntiAlias(true);
+            promptPaint[1].setARGB(80, color - offset, color - offset, color);
+            
+            promptPaint[2] = new Paint();
+            promptPaint[2].setAntiAlias(true);
+            promptPaint[2].setARGB(80, color, color - offset, color - offset);
+
+            promptBorderPaint = new Paint[3];
+            promptBorderPaint[1] = new Paint();
+            promptBorderPaint[1].setAntiAlias(true);
+            promptBorderPaint[1].setARGB(120, color - offset, color - offset, color);
+            promptBorderPaint[1].setStyle(Paint.Style.STROKE);
+            promptBorderPaint[1].setStrokeWidth(5);
+            
+            promptBorderPaint[2] = new Paint();
+            promptBorderPaint[2].setAntiAlias(true);
+            promptBorderPaint[2].setARGB(120, color, color - offset, color - offset);
+            promptBorderPaint[2].setStyle(Paint.Style.STROKE);
+            promptBorderPaint[2].setStrokeWidth(5);
         }
         else if(key.equals("white")) {
             int color = 255;
@@ -214,6 +241,28 @@ public class Theme {
             backgroundPaint = new Paint();
             backgroundPaint.setAntiAlias(true);
             backgroundPaint.setARGB(255, 140, 140, 140);
+
+            promptPaint = new Paint[3];
+            promptPaint[1] = new Paint();
+            promptPaint[1].setAntiAlias(true);
+            promptPaint[1].setARGB(80, color - offset, color - offset, color);
+            
+            promptPaint[2] = new Paint();
+            promptPaint[2].setAntiAlias(true);
+            promptPaint[2].setARGB(80, color, color - offset, color - offset);
+
+            promptBorderPaint = new Paint[3];
+            promptBorderPaint[1] = new Paint();
+            promptBorderPaint[1].setAntiAlias(true);
+            promptBorderPaint[1].setARGB(120, color - offset, color - offset, color);
+            promptBorderPaint[1].setStyle(Paint.Style.STROKE);
+            promptBorderPaint[1].setStrokeWidth(5);
+            
+            promptBorderPaint[2] = new Paint();
+            promptBorderPaint[2].setAntiAlias(true);
+            promptBorderPaint[2].setARGB(120, color, color - offset, color - offset);
+            promptBorderPaint[2].setStyle(Paint.Style.STROKE);
+            promptBorderPaint[2].setStrokeWidth(5);
         }
         else { // default ("rb")
             int color = 230;
@@ -281,6 +330,11 @@ public class Theme {
             backgroundPaint.setAntiAlias(true);
             backgroundPaint.setARGB(0, 0, 0, 0);
 
+            lastPlacementPaint[2] = new Paint();
+            lastPlacementPaint[2].setAntiAlias(true);
+            lastPlacementPaint[2].setARGB(190, 240, 240, 240);
+            lastPlacementPaint[2].setStrokeWidth(2f);
+            
             promptPaint = new Paint[3];
             promptPaint[1] = new Paint();
             promptPaint[1].setAntiAlias(true);
@@ -448,10 +502,10 @@ public class Theme {
         canvas.drawLine(crosshairX, upperLeftY, crosshairX, lowerRightY, cursorPaint);
     }
     
-    public void drawLastPlacement(Canvas canvas, float x, float y) {
+    public void drawLastPlacement(Canvas canvas, float x, float y, int p) {
         int halfLine = pegRadius + 1;
-        canvas.drawLine(x, y - halfLine, x, y + halfLine, lastPlacementPaint);
-        canvas.drawLine(x - halfLine, y, x + halfLine, y, lastPlacementPaint);
+        canvas.drawLine(x, y - halfLine, x, y + halfLine, lastPlacementPaint[p]);
+        canvas.drawLine(x - halfLine, y, x + halfLine, y, lastPlacementPaint[p]);
     }
     
     public void drawPrompt(Canvas canvas, RectF rect, int p) {
