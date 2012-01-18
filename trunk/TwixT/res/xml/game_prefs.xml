@@ -3,69 +3,78 @@
     <PreferenceCategory
       android:key="category"
       android:title="Preferences">
-    <ListPreference           
-       	android:title="Board Size"           
-       	android:summary="Change the board size. Default is 24 x 24."           
-       	android:key="sizePref"           
-       	android:defaultValue="24"           
-       	android:entries="@array/sizes"           
-       	android:entryValues="@array/sizes_values" />
-	<CheckBoxPreference 
-	    android:key="showGridPref"
-		android:title="Show guidelines on touch" 
-		android:defaultValue="true"
-		android:summary="Show line axis guidelines when placing pegs" />
-	<CheckBoxPreference 
-	    android:key="showLastPlacementPref"
-		android:title="Show last move" 
-		android:defaultValue="true"
-		android:summary="Show a marker on latest peg placed" />
-	<CheckBoxPreference 
-	    android:key="offsetTouchPref"
-		android:title="Touch is offset" 
-		android:defaultValue="true"
-		android:summary="Screen interaction will be offset from where you actually touch" />
-	<!-- 
-    <ListPreference           
-       	android:title="Theme"           
-       	android:summary="Change the look of the game"           
-       	android:key="themePref"           
-       	android:defaultValue="rb"           
-       	android:entries="@array/themes"           
-       	android:entryValues="@array/themes_values" />
-       	 --> 
-	<CheckBoxPreference 
-	    android:key="advancedAIPref"
-		android:title="Advanced AI settings" 
-		android:defaultValue="false"
-		android:summary="" />
-	<EditTextPreference 
-		android:layout="?android:attr/preferenceLayoutChild"
-	    android:key="aiTimePref"
-		android:title="Turn time" 
-		android:defaultValue="5"
-		android:dependency="advancedAIPref"
-		android:inputType="number"
-		android:summary="Maximum number of seconds that the AI will take to play each turn" />
-	<!-- 
+	    <ListPreference           
+	       	android:title="Board Size"           
+	       	android:summary="Change the board size. Default is 24 x 24."           
+	       	android:key="sizePref"           
+	       	android:defaultValue="24"           
+	       	android:entries="@array/sizes"           
+	       	android:entryValues="@array/sizes_values" />
 		<CheckBoxPreference 
-	    android:key="randomFirstPref"
-		android:title="Random start player" 
-		android:defaultValue="true"
-		android:summary="" />
-	<CheckBoxPreference 
-	    android:key="darkFirstPref"
-		android:title="Dark moves first" 
-		android:defaultValue="true"
-		android:layout="?android:attr/preferenceLayoutChild"
-		android:dependency="nonRandomFirstPref" 
-		android:summary="Dark color moves first" />
-	<CheckBoxPreference 
-	    android:key="requireDragPref"
-		android:title="Drag pieces" 
-		android:defaultValue="true"
-		android:summary="Placing a piece requires dragging it from your side. If this is not checked, then simply tapping the screen will place a piece" />
-		 -->        
+		    android:key="showGridPref"
+			android:title="Show guidelines on touch" 
+			android:defaultValue="true"
+			android:summary="Show line axis guidelines when placing pegs" />
+		<CheckBoxPreference 
+		    android:key="showLastPlacementPref"
+			android:title="Show last move" 
+			android:defaultValue="true"
+			android:summary="Show a marker on latest peg placed" />
+		<CheckBoxPreference 
+		    android:key="offsetTouchPref"
+			android:title="Touch is offset" 
+			android:defaultValue="true"
+			android:summary="Screen interaction will be offset from where you actually touch" />
+		<!-- 
+	    <ListPreference           
+	       	android:title="Theme"           
+	       	android:summary="Change the look of the game"           
+	       	android:key="themePref"           
+	       	android:defaultValue="rb"           
+	       	android:entries="@array/themes"           
+	       	android:entryValues="@array/themes_values" />
+	       	 --> 
+		<PreferenceCategory android:title="Single Player AI">
+	       	 
+			<EditTextPreference 
+			    android:key="aiSearchDepthPref"
+				android:title="Search Depth (default 5)" 
+				android:defaultValue="5"
+				android:inputType="number"
+				android:summary="" />
+			
+			<CheckBoxPreference 
+			    android:key="aiUseTimePref"
+				android:title="Use turn time instead of search depth" 
+				android:defaultValue="false"
+				android:summary="" />
+			<EditTextPreference 
+				android:layout="?android:attr/preferenceLayoutChild"
+			    android:key="aiTimePref"
+				android:title="Turn time" 
+				android:defaultValue="5"
+				android:dependency="advancedAIPref"
+				android:inputType="number"
+				android:summary="Maximum number of seconds that the AI will take to play each turn" />
+			<!-- 
+				<CheckBoxPreference 
+			    android:key="randomFirstPref"
+				android:title="Random start player" 
+				android:defaultValue="true"
+				android:summary="" />
+			<CheckBoxPreference 
+			    android:key="darkFirstPref"
+				android:title="Dark moves first" 
+				android:defaultValue="true"
+				android:layout="?android:attr/preferenceLayoutChild"
+				android:dependency="nonRandomFirstPref" 
+				android:summary="Dark color moves first" />
+			<CheckBoxPreference 
+			    android:key="requireDragPref"
+				android:title="Drag pieces" 
+				android:defaultValue="true"
+				android:summary="Placing a piece requires dragging it from your side. If this is not checked, then simply tapping the screen will place a piece" />
+				 -->
+		</PreferenceCategory>
     </PreferenceCategory>
-
 </PreferenceScreen>
