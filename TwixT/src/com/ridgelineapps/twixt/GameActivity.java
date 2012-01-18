@@ -83,23 +83,31 @@ public class GameActivity extends Activity implements OnTouchListener{
         if(players == 1) {
         	singlePlayer = true;
         	
-            if(prefs.getBoolean("advancedAIPref", false)) {
-            	try {
-	            	GeneralSettings.getInstance().mdFixedPly = false;
+        	boolean usePly = true;
+            if(prefs.getBoolean("aiUseTimePref", false)) {
+                try {
 	            	String timeStr = prefs.getString("aiTimePref", "5");
             		GeneralSettings.getInstance().mdTime = Integer.parseInt(timeStr);
-            		GeneralSettings.getInstance().correct();
+            		usePly = false;
             	}
             	catch(Exception e) {
             		e.printStackTrace();
-                	GeneralSettings.getInstance().mdFixedPly = true;
-            		GeneralSettings.getInstance().correct();
             	}
             }
-            else {
-            	GeneralSettings.getInstance().mdFixedPly = true;
-        		GeneralSettings.getInstance().correct();
+            if(usePly) {
+                int ply = 5;
+                try {
+                    String plyStr = prefs.getString("aiSearchDepthPref", "5");
+                    ply = Integer.parseInt(plyStr);
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+                
+                GeneralSettings.getInstance().mdPly = ply;
             }
+            GeneralSettings.getInstance().mdFixedPly = usePly;
+            GeneralSettings.getInstance().correct();
         	
             boolean humanFirst = true;
             if(random) {
