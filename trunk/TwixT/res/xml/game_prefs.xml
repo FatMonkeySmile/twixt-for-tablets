@@ -25,13 +25,15 @@
 		android:title="Touch is offset" 
 		android:defaultValue="true"
 		android:summary="Screen interaction will be offset from where you actually touch" />
+	<!-- 
     <ListPreference           
        	android:title="Theme"           
        	android:summary="Change the look of the game"           
        	android:key="themePref"           
        	android:defaultValue="rb"           
        	android:entries="@array/themes"           
-       	android:entryValues="@array/themes_values" /> 
+       	android:entryValues="@array/themes_values" />
+       	 --> 
 	<CheckBoxPreference 
 	    android:key="advancedAIPref"
 		android:title="Advanced AI settings" 
