@@ -33,8 +33,8 @@ public class GameView extends View {
     int xOffset = 0;
     int yOffset = 0;
     
-    int width;
-    int height;
+    int width = -1;
+    int height = -1;
     
     boolean showingWinner;
     
@@ -69,7 +69,14 @@ public class GameView extends View {
     }
     
     protected void onDraw(Canvas canvas) {
-    	if(width != canvas.getWidth() || height != canvas.getHeight()) {
+//		Commenting out dynamic width and height adjusting since it seems to not work properly when coming back to the app from sleep. 
+//    	Setting on first draw and keeping does look like it works.
+//      if(width != canvas.getWidth() || height != canvas.getHeight()) { 
+//    		resetValues(canvas);
+//    	}
+//    	
+//    	Setting on first draw and keeping does look like it works. 
+    	if(width == -1 || height == -1) {
     		resetValues(canvas);
     	}
 
