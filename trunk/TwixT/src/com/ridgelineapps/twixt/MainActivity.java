@@ -35,8 +35,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        View v = getWindow().getDecorView().findViewById(android.R.id.content);
-        v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN); 
+//        View v = getWindow().getDecorView().findViewById(android.R.id.content);
+//        v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN); 
 
         ((Button)findViewById(R.id.button1)).setOnClickListener(new OnClickListener() {
             @Override

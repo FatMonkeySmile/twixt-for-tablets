@@ -43,6 +43,8 @@ public class GameActivity extends Activity implements OnTouchListener{
     boolean aiMoving = false;
     boolean humanJustMoved = false;
     
+    public static long MIN_TURN_TIME = 750L;
+    
     boolean offsetTouch;
     boolean showCursor;
     
@@ -55,6 +57,7 @@ public class GameActivity extends Activity implements OnTouchListener{
     int[] lastBoardPoint;
     
     public static final int TOUCH_OFFSET = 150;
+    public long aiStartTurn;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,6 +139,15 @@ public class GameActivity extends Activity implements OnTouchListener{
     					board.turn = aiPlayer;
     					humanJustMoved = false;
     				} else {
+    				    long diff = System.currentTimeMillis() - aiStartTurn; 
+    				    if( diff < MIN_TURN_TIME) {
+    				        try {
+    				            Thread.sleep(MIN_TURN_TIME - diff);
+    				        }
+    				        catch(Exception e) {
+    				            e.printStackTrace();
+    				        }
+    				    }
     					board.turn = humanPlayer;
     					aiMoving = false;
     				}
@@ -170,7 +182,7 @@ public class GameActivity extends Activity implements OnTouchListener{
         
         view = new GameView(this, board, theme);
         view.setOnTouchListener(this);
-        view.setSystemUiVisibility(View.STATUS_BAR_HIDDEN); 
+//        view.setSystemUiVisibility(View.STATUS_BAR_HIDDEN); 
         view.showLastPlacement = showLastPlacement;
         setContentView(view);
     }
@@ -248,6 +260,34 @@ public class GameActivity extends Activity implements OnTouchListener{
         
         return true;
     }
+    
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        super.onCreateOptionsMenu(menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu, menu);
+//        return true;
+//    }
+//    
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if(item.getItemId() == R.id.undo) {
+//            undo();
+//        }
+//        return true;
+//    }    
+    
+    public void undo() {
+        if(singlePlayer) {
+            if(!aiMoving) {
+                if(match.getHighestMoveNr() > 0)
+                    match.removeMove();
+            }
+        }
+        else {
+            board.undo();
+        }
+    }
 
     public void cleanupPegDrawing() {
         touchOffset = null;
@@ -267,6 +307,7 @@ public class GameActivity extends Activity implements OnTouchListener{
     	else {
     		if(board.isValid(x, y, humanPlayer)) {
     			System.out.println("addPeg:" + x + ", " + y);
+    			aiStartTurn = System.currentTimeMillis();
 	    		aiMoving = true;
 	    		humanJustMoved = true;
 		        match.setlastMove(x, y);
