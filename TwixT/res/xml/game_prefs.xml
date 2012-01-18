@@ -34,47 +34,47 @@
 	       	android:entries="@array/themes"           
 	       	android:entryValues="@array/themes_values" />
 	       	 --> 
-		<PreferenceCategory android:title="Single Player AI">
-	       	 
-			<EditTextPreference 
-			    android:key="aiSearchDepthPref"
-				android:title="Search Depth (default 5)" 
-				android:defaultValue="5"
-				android:inputType="number"
-				android:summary="" />
-			
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Single Player AI">
+       	 
+		<EditTextPreference 
+		    android:key="aiSearchDepthPref"
+			android:title="Search Depth (default 5)" 
+			android:defaultValue="5"
+			android:inputType="number"
+			android:summary="" />
+		
+		<CheckBoxPreference 
+		    android:key="aiUseTimePref"
+			android:title="Use turn time instead of search depth" 
+			android:defaultValue="false"
+			android:summary="" />
+		<EditTextPreference 
+			android:layout="?android:attr/preferenceLayoutChild"
+		    android:key="aiTimePref"
+			android:title="Turn time" 
+			android:defaultValue="5"
+			android:dependency="aiUseTimePref"
+			android:inputType="number"
+			android:summary="Maximum number of seconds that the AI will take to play each turn" />
+		<!-- 
 			<CheckBoxPreference 
-			    android:key="aiUseTimePref"
-				android:title="Use turn time instead of search depth" 
-				android:defaultValue="false"
-				android:summary="" />
-			<EditTextPreference 
-				android:layout="?android:attr/preferenceLayoutChild"
-			    android:key="aiTimePref"
-				android:title="Turn time" 
-				android:defaultValue="5"
-				android:dependency="advancedAIPref"
-				android:inputType="number"
-				android:summary="Maximum number of seconds that the AI will take to play each turn" />
-			<!-- 
-				<CheckBoxPreference 
-			    android:key="randomFirstPref"
-				android:title="Random start player" 
-				android:defaultValue="true"
-				android:summary="" />
-			<CheckBoxPreference 
-			    android:key="darkFirstPref"
-				android:title="Dark moves first" 
-				android:defaultValue="true"
-				android:layout="?android:attr/preferenceLayoutChild"
-				android:dependency="nonRandomFirstPref" 
-				android:summary="Dark color moves first" />
-			<CheckBoxPreference 
-			    android:key="requireDragPref"
-				android:title="Drag pieces" 
-				android:defaultValue="true"
-				android:summary="Placing a piece requires dragging it from your side. If this is not checked, then simply tapping the screen will place a piece" />
-				 -->
-		</PreferenceCategory>
+		    android:key="randomFirstPref"
+			android:title="Random start player" 
+			android:defaultValue="true"
+			android:summary="" />
+		<CheckBoxPreference 
+		    android:key="darkFirstPref"
+			android:title="Dark moves first" 
+			android:defaultValue="true"
+			android:layout="?android:attr/preferenceLayoutChild"
+			android:dependency="nonRandomFirstPref" 
+			android:summary="Dark color moves first" />
+		<CheckBoxPreference 
+		    android:key="requireDragPref"
+			android:title="Drag pieces" 
+			android:defaultValue="true"
+			android:summary="Placing a piece requires dragging it from your side. If this is not checked, then simply tapping the screen will place a piece" />
+			 -->
     </PreferenceCategory>
 </PreferenceScreen>
