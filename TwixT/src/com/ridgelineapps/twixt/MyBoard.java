@@ -589,10 +589,12 @@ public class MyBoard {
                 {
                     if(linesToCheck[table.lines[j]][playerToCheck])
                     {
-                        if(playerToCheck != turn)
-                        {
-                            return true;
-                        }
+                        return true;
+                        // Uncomment this to allow "pen and paper" rules for 2 player
+//                        if(playerToCheck != turn)
+//                        {
+//                            return true;
+//                        }
                     }
                 }
             }
