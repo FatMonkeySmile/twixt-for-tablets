@@ -150,7 +150,7 @@ public class GameView extends View {
                         theme.drawLine(canvas, point, point2, p, true);
                         
                         if(board.winner != 0 && (!board.winningPegs[x][y] || !board.winningPegs[x2][y2])) {
-                            //theme.darkenLine(canvas, point, point2, p);
+                            theme.darkenLine(canvas, point, point2, p);
                         }
                     }
                 }

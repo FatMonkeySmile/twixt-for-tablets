@@ -44,11 +44,11 @@ public class TwixtUtils
         }
         
         // don't allow pegs in enemy goals
-        if(turn == 1 && (x == 0 || x == board.size - 1)) {
+        if(turn == 2 && (x == 0 || x == board.size - 1)) {
             return false;
         }
         
-        if(turn == 2 && (y == 0 || y == board.size - 1)) {
+        if(turn == 1 && (y == 0 || y == board.size - 1)) {
             return false;
         }
         
