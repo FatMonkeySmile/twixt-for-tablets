@@ -197,6 +197,7 @@ public class GameActivity extends Activity implements OnTouchListener{
 		super.onDestroy();
 		try {
 			match.deleteObservers();
+			match.end = true;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

@@ -87,10 +87,14 @@ public final class FindMove
          return initMove;
       }
 
+      if(match.end) return null;
+
       clock = new Stopwatch();
 
       internalComputeMove(player);
 
+      if(match.end) return null;
+      
       System.out.println("Elapsed: " + clock.getTime() + " msec.");
 
       return bestMove;
@@ -116,12 +120,16 @@ public final class FindMove
       }
 
       // use alpha-beta
+      if(match.end) return;
       OrderedMoves.initOrderedMoves();
       usealphabeta = false;
+      if(match.end) return;
       for (currentMaxPly = 3; currentMaxPly <= maxPly; currentMaxPly++)
       {
+         if(match.end) return;
          if (currentMaxPly != 4 || currentMaxPly == maxPly)
          {
+            if(match.end) return;
             zobristMap.clear();
             alphaBeta(player, currentMaxPly, -Integer.MAX_VALUE, Integer.MAX_VALUE);
             usealphabeta = true;
@@ -243,6 +251,7 @@ public final class FindMove
             //System.out.println("Treffer bei ply = " + ply + " Hashsize:" + zobristMap.size());
             return ((Integer) zobristVal).intValue();
          }
+         if(match.end) return 0;
          //return evaluatePosition(player);
          val = evaluatePosition(player);
          zobristMap.put(new Integer(match.getBoardY().getZobristValue()), new Integer(val));
@@ -264,6 +273,7 @@ public final class FindMove
       {
          while ((move = moveSet.getMove()) != null)
          {  
+            if(match.end) return 0;
             makeMove(move, player);
             val = alphaBeta (-player, ply - 1, alpha, beta);
             //zobristMap.put(new Integer(match.getBoardY().getZobristValue()), new Integer(val));
@@ -302,6 +312,7 @@ public final class FindMove
                   OrderedMoves.addKiller(move, player);
                }
             }
+            if(match.end) return 0;
             unmakeMove(move, player);
 
             if (beta <= alpha)
@@ -316,6 +327,7 @@ public final class FindMove
       {
          while ((move = moveSet.getMove()) != null)
          {
+            if(match.end) return 0;
             makeMove(move, player);
             val = alphaBeta (-player, ply - 1, alpha, beta);
             // zobristMap.put(new Integer(match.getBoardY().getZobristValue()), new Integer(val));
@@ -345,12 +357,14 @@ public final class FindMove
                }
                else
                {
+                  if(match.end) return 0;
                   alpha = val;
                   OrderedMoves.addKiller(move, player);
                }
             }
 
 
+            if(match.end) return 0;
             unmakeMove(move, player);
 
             if (beta <= alpha)
