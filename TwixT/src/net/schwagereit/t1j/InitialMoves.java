@@ -88,7 +88,6 @@ public final class InitialMoves
       // find conter-move which is not near other pins
       for (int i = match.getMoveNr(); i >= 1; i-=2)
       {
-         if(match.end) return null;
          bx = match.getMoveX(i);
          by = match.getMoveY(i);
          Move possMove = getCounterPin(bx,by);

@@ -196,14 +196,20 @@ public class GameActivity extends Activity implements OnTouchListener{
 	protected void onDestroy() {
 		super.onDestroy();
 		try {
-			match.deleteObservers();
-			match.end = true;
+			// Not great, but simplest way to stop AI threads
+			android.os.Process.killProcess(android.os.Process.myPid());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Override
+	public void onBackPressed() {
+	    finish();
+	    return;
+	}
+	
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
     	if(singlePlayer && aiMoving) {

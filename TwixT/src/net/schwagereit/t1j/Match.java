@@ -20,8 +20,6 @@ import java.util.Observable;
  */
 public final class Match extends Observable implements Runnable
 {
-    public boolean end = false;
-    
    /** the real board. */
    private final Board boardY; 
    
@@ -375,7 +373,6 @@ public final class Match extends Observable implements Runnable
 //         setGuiBlocked(false);
          //reset cursor
 //         frame.setCursor(cursor);
-         if(end) return;
       }
       if (move == null)
       {  // no computer move was needed
