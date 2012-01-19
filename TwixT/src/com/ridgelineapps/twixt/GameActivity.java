@@ -20,9 +20,11 @@ package com.ridgelineapps.twixt;
 import java.util.Observable;
 import java.util.Observer;
 
+import net.schwagereit.t1j.CheckPattern;
 import net.schwagereit.t1j.GeneralSettings;
 import net.schwagereit.t1j.Match;
 import net.schwagereit.t1j.MatchData;
+import net.schwagereit.t1j.Zobrist;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.PointF;
@@ -85,6 +87,9 @@ public class GameActivity extends Activity implements OnTouchListener{
         
         if(players == 1) {
         	singlePlayer = true;
+        	
+            CheckPattern.getInstance().loadPattern();
+            Zobrist.getInstance().initialize();
         	
         	boolean usePly = true;
             if(prefs.getBoolean("aiUseTimePref", false)) {
@@ -186,8 +191,20 @@ public class GameActivity extends Activity implements OnTouchListener{
         view.showLastPlacement = showLastPlacement;
         setContentView(view);
     }
-    
-    public boolean onTouch(View v, MotionEvent event) {
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		try {
+			match.deleteObservers();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
     	if(singlePlayer && aiMoving) {
     		return false;
     	}

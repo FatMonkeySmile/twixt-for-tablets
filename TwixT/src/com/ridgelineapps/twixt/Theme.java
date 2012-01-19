@@ -60,7 +60,7 @@ public class Theme {
         
         darkenPaint = new Paint();
         darkenPaint.setAntiAlias(true);
-        darkenPaint.setARGB(180, 0, 0, 0);
+        darkenPaint.setARGB(80, 0, 0, 0);
         darkenPaint.setStrokeWidth(5f);
         
         lastPlacementPaint = new Paint[3];

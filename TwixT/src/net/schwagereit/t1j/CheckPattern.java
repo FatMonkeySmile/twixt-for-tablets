@@ -22,7 +22,6 @@ import java.util.*;
 public final class CheckPattern
 {
    private BufferedReader reader;
-//   private static final String FILENAME = "patterns.properties";
    private static final String FILENAME = "patterns.properties";
 
    private static final String OFFENSIVE = "OFF"; //use uppercase
