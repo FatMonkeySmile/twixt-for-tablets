@@ -118,9 +118,9 @@ public class GameView extends View {
 
 		                theme.drawLine(canvas, point, point2, p, false);
 		                
-	                    if(board.winner != 0 && (!board.winningPegs[x][y] || !board.winningPegs[x2][y2])) {
-	                        //theme.darkenLine(canvas, point, point2, p);
-	                    }
+//	                    if(board.winner != 0 && (!board.winningPegs[x][y] || !board.winningPegs[x2][y2])) {
+//	                        theme.darkenLine(canvas, point, point2, p);
+//	                    }
             		}
             	}
             }
@@ -149,9 +149,9 @@ public class GameView extends View {
 
                         theme.drawLine(canvas, point, point2, p, true);
                         
-                        if(board.winner != 0 && (!board.winningPegs[x][y] || !board.winningPegs[x2][y2])) {
-                            theme.darkenLine(canvas, point, point2, p);
-                        }
+//                        if(board.winner != 0 && (!board.winningPegs[x][y] || !board.winningPegs[x2][y2])) {
+//                            theme.darkenLine(canvas, point, point2, p);
+//                        }
                     }
                 }
             }
@@ -170,8 +170,7 @@ public class GameView extends View {
                 // draw peg if needed
                 int p = board.pegs[x][y];
             	if(p != 0) {
-            		boolean darken = (board.winner != 0 && !board.winningPegs[x][y]);
-            		darken = false;
+            		boolean darken = false; //(board.winner != 0 && !board.winningPegs[x][y]);
             		theme.drawPeg(canvas, point, p, darken);
             	}
             }
