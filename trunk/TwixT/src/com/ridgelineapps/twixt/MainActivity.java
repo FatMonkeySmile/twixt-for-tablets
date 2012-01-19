@@ -43,7 +43,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, GameActivity.class);
                 i.putExtra("players", 1);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 finish();
                 startActivity(i);
             }
@@ -54,7 +53,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, GameActivity.class);
                 i.putExtra("players", 2);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);                
                 finish();
                 startActivity(i);
             }
