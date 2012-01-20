@@ -57,6 +57,11 @@
 			android:dependency="aiUseTimePref"
 			android:inputType="number"
 			android:summary="Maximum number of seconds that the AI will take to play each turn" />
+		<CheckBoxPreference 
+		    android:key="humanRed"
+			android:title="AI Plays Blue" 
+			android:defaultValue="true"
+			android:summary="" />
 		<!-- 
 			<CheckBoxPreference 
 		    android:key="randomFirstPref"

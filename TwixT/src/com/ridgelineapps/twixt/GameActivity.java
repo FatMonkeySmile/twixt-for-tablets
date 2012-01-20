@@ -52,9 +52,8 @@ public class GameActivity extends Activity implements OnTouchListener{
     
     PointF touchOffset;
     
-    //TODO: set in prefs...
-    int humanPlayer = 1;
-    int aiPlayer = 2;
+    int humanPlayer = 2;
+    int aiPlayer = 1;
     
     int[] lastBoardPoint;
     
@@ -76,9 +75,19 @@ public class GameActivity extends Activity implements OnTouchListener{
         String sizeString = prefs.getString("sizePref", "24");
         showCursor = prefs.getBoolean("showGridPref", true);
         
-        boolean random = prefs.getBoolean("randomFirstPref", true);
+        boolean random = true; //prefs.getBoolean("randomFirstPref", true);
         boolean blueFirst = true; //prefs.getBoolean("darkFirstPref", true);
         boolean showLastPlacement = prefs.getBoolean("showLastPlacementPref", true);
+        boolean humanRed = prefs.getBoolean("humanRed", true);
+
+        if(humanRed) {
+            humanPlayer = 2;
+            aiPlayer = 1;
+        }
+        else {
+            humanPlayer = 1;
+            aiPlayer = 2;
+        }
         
         offsetTouch = prefs.getBoolean("offsetTouchPref", true);
         
@@ -123,7 +132,7 @@ public class GameActivity extends Activity implements OnTouchListener{
             }
         	
             board = new MyBoard(size, match, false, true);
-            board.turn = (humanFirst?1:2);
+            board.turn = (humanFirst?humanPlayer:aiPlayer);
     		match = new Match();
 
     		MatchData matchData = new MatchData();
@@ -132,9 +141,12 @@ public class GameActivity extends Activity implements OnTouchListener{
     		matchData.mdPlayerX = "jane";
     		matchData.mdYsize = size;
     		matchData.mdXsize = size;
-    		matchData.mdYhuman = false;
-    		matchData.mdXhuman = true;
-   			matchData.mdYstarts = !humanFirst;
+    		matchData.mdYhuman = humanRed;
+    		matchData.mdXhuman = !humanRed;
+    		if(humanRed)
+    		    matchData.mdYstarts = humanFirst;
+    		else
+                matchData.mdYstarts = !humanFirst;
     		matchData.mdPieRule = false;
     		
     		match.addObserver(new Observer() {
