@@ -296,14 +296,18 @@ public class GameView extends View {
         
 //        if(!drawSides) 
         {
-            yMargin = (int) (border + scale);
-            xMargin = 7;
+            yMargin = (int) (border + scale * 2);
+            xMargin = 5;
         }
 
-        if(player == 1) {
-            return new RectF(xMargin - offset, yMargin - offset, board_x1 - xMargin / 3 + offset, height - yMargin + offset);
+//        if(player == 1) {
+//            return new RectF(xMargin - offset, yMargin - offset, board_x1 - xMargin / 3 + offset, height - yMargin + offset);
+//        }
+//        return new RectF(board_x2 + xMargin / 3 - offset, yMargin - offset, width - xMargin + offset, height - yMargin + offset);
+        if (player == 1) {
+            return new RectF(board_x1 - scale * 2, yMargin - offset, board_x1 - xMargin + offset, height - yMargin + offset);
         }
-        return new RectF(board_x2 + xMargin / 3 - offset, yMargin - offset, width - xMargin + offset, height - yMargin + offset);
+        return new RectF(board_x2 + xMargin - offset, yMargin - offset, board_x2 + scale * 2, height - yMargin + offset);
     }
     
     public int[] translateToBoard(float x, float y) {
