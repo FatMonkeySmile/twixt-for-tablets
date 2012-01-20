@@ -52,6 +52,7 @@ public class Theme {
     private Paint cursorPaint;
     
     private Paint darkenPaint;
+    private Paint areaLinePaint;
 
     public Theme(String key) {
         shadowPaint = new Paint();
@@ -62,6 +63,11 @@ public class Theme {
         darkenPaint.setAntiAlias(true);
         darkenPaint.setARGB(80, 0, 0, 0);
         darkenPaint.setStrokeWidth(5f);
+        
+        areaLinePaint = new Paint();
+        areaLinePaint.setAntiAlias(true);
+        areaLinePaint.setARGB(190, 130, 130, 130);
+        areaLinePaint.setStrokeWidth(1f);
         
         lastPlacementPaint = new Paint[3];
         lastPlacementPaint[1] = new Paint();
@@ -534,7 +540,11 @@ public class Theme {
 //        }
     }
     
-    public void darkenLine(Canvas canvas, float[] point, float[] point2, int p) {
-        canvas.drawLine(point[0], point[1], point2[0], point2[1], darkenPaint);
+    public void drawAreaLine(Canvas canvas, float[] point1, float[] point2) {
+        canvas.drawLine(point1[0], point1[1], point2[0], point2[1], areaLinePaint);
+    }
+    
+    public void darkenLine(Canvas canvas, float[] point1, float[] point2, int p) {
+        canvas.drawLine(point1[0], point1[1], point2[0], point2[1], darkenPaint);
     }
 }

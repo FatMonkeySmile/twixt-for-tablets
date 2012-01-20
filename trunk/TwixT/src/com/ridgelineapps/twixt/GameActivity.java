@@ -78,7 +78,9 @@ public class GameActivity extends Activity implements OnTouchListener{
         boolean random = true; //prefs.getBoolean("randomFirstPref", true);
         boolean blueFirst = true; //prefs.getBoolean("darkFirstPref", true);
         boolean showLastPlacement = prefs.getBoolean("showLastPlacementPref", true);
-        boolean humanRed = prefs.getBoolean("humanRed", true);
+        boolean humanRed = prefs.getBoolean("humanRedPref", true);
+        
+        boolean showAreaLines = prefs.getBoolean("areaLinesPref", false);
 
         if(humanRed) {
             humanPlayer = 2;
@@ -201,6 +203,7 @@ public class GameActivity extends Activity implements OnTouchListener{
         view.setOnTouchListener(this);
 //        view.setSystemUiVisibility(View.STATUS_BAR_HIDDEN); 
         view.showLastPlacement = showLastPlacement;
+        view.showAreaLines = showAreaLines;
         setContentView(view);
     }
 
