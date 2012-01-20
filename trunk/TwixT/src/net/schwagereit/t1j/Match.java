@@ -64,7 +64,7 @@ public final class Match extends Observable implements Runnable
    public Match()
    {
       boardY = Board.getBoard(Board.YPLAYER);
-      //boardY.setZobristEnabled(true);
+      boardY.setZobristEnabled(true);
       boardX = Board.getBoard(Board.XPLAYER);
       boardDisplay = Board.getBoardDisplay();
       matchData = null;
