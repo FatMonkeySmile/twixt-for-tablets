@@ -509,6 +509,7 @@ public class Theme {
     }
     
     public void drawPrompt(Canvas canvas, RectF rect, int p) {
+        canvas.drawRect(rect, promptPaint[p]);
         canvas.drawRect(rect, promptBorderPaint[p]);
 
 //        if(drawSides)
