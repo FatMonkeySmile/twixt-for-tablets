@@ -38,6 +38,8 @@ public class GameView extends View {
     
     boolean showingWinner;
     
+    boolean showAreaLines;
+    
     Theme theme;
     
     PointF placingPegLoc;
@@ -155,6 +157,83 @@ public class GameView extends View {
                     }
                 }
             }
+        }
+        
+        // draw area lines
+        if(showAreaLines) {
+            int x1, y1, x2, y2, offsetX, offsetY;
+            x1 = 1; y1 = 1;
+            x2 = x1; y2 = y1;
+            offsetX = 2;
+            offsetY = 1;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
+            x1 = 1; y1 = 1;
+            x2 = x1; y2 = y1;
+            offsetX = 1;
+            offsetY = 2;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
+            x1 = board.size - 2; y1 = 1;
+            x2 = x1; y2 = y1;
+            offsetX = -2;
+            offsetY = 1;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
+            x1 = board.size - 2; y1 = 1;
+            x2 = x1; y2 = y1;
+            offsetX = -1;
+            offsetY = 2;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
+            x1 = 1; y1 = board.size - 2;
+            x2 = x1; y2 = y1;
+            offsetX = 1;
+            offsetY = -2;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
+            x1 = 1; y1 = board.size - 2;
+            x2 = x1; y2 = y1;
+            offsetX = 2;
+            offsetY = -1;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
+            x1 = board.size - 2; y1 = board.size - 2;
+            x2 = x1; y2 = y1;
+            offsetX = -1;
+            offsetY = -2;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
+            x1 = board.size - 2; y1 = board.size - 2;
+            x2 = x1; y2 = y1;
+            offsetX = -2;
+            offsetY = -1;
+            while(x2 + offsetX < board.size - 1 && y2 + offsetY < board.size - 1 && x2 + offsetX > 1 && y2 + offsetY > 1) {
+                x2 += offsetX;
+                y2 += offsetY;
+            } 
+            theme.drawAreaLine(canvas,  translateToScreen(x1, y1), translateToScreen(x2, y2));
         }
         
         // draw pegs and holes

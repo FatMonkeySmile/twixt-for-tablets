@@ -21,6 +21,11 @@
 			android:defaultValue="true"
 			android:summary="Show a marker on latest peg placed" />
 		<CheckBoxPreference 
+		    android:key="areaLinesPref"
+			android:title="Show area lines" 
+			android:defaultValue="false"
+			android:summary="" />
+		<CheckBoxPreference 
 		    android:key="offsetTouchPref"
 			android:title="Touch is offset" 
 			android:defaultValue="true"
@@ -58,7 +63,7 @@
 			android:inputType="number"
 			android:summary="Maximum number of seconds that the AI will take to play each turn" />
 		<CheckBoxPreference 
-		    android:key="humanRed"
+		    android:key="humanRedPref"
 			android:title="AI Plays Blue" 
 			android:defaultValue="true"
 			android:summary="" />
