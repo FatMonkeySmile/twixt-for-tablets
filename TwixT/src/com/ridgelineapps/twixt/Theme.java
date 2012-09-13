@@ -41,6 +41,12 @@ public class Theme {
     private Paint[] promptPaint;
     private Paint[] promptBorderPaint;
     
+    private Paint[] promptOKPaint;
+    private Paint[] promptOKBorderPaint;
+    
+    private Paint[] promptCancelPaint;
+    private Paint[] promptCancelBorderPaint;
+    
     private Paint playerPaint[];
     private Paint[][] glow;
     
@@ -362,7 +368,53 @@ public class Theme {
             promptBorderPaint[2].setARGB(120, color, color - offset, color - offset);
             promptBorderPaint[2].setStyle(Paint.Style.STROKE);
             promptBorderPaint[2].setStrokeWidth(5);
-        }
+
+            promptOKPaint = new Paint[3];
+            promptOKPaint[1] = new Paint();
+            promptOKPaint[1].setAntiAlias(true);
+            promptOKPaint[1].setARGB(80, color - offset, color, color - offset);
+            
+            promptOKPaint[2] = new Paint();
+            promptOKPaint[2].setAntiAlias(true);
+            promptOKPaint[2].setARGB(80, color - offset, color, color - offset);
+
+            promptOKBorderPaint = new Paint[3];
+            promptOKBorderPaint[1] = new Paint();
+            promptOKBorderPaint[1].setAntiAlias(true);
+            promptOKBorderPaint[1].setARGB(120, color - offset, color, color - offset);
+            promptOKBorderPaint[1].setStyle(Paint.Style.STROKE);
+            promptOKBorderPaint[1].setStrokeWidth(5);
+            
+            promptOKBorderPaint[2] = new Paint();
+            promptOKBorderPaint[2].setAntiAlias(true);
+            promptOKBorderPaint[2].setARGB(120, color - offset, color, color - offset);
+            promptOKBorderPaint[2].setStyle(Paint.Style.STROKE);
+            promptOKBorderPaint[2].setStrokeWidth(5);
+            
+            color = 220;
+            offset = 120;
+            promptCancelPaint = new Paint[3];
+            promptCancelPaint[1] = new Paint();
+            promptCancelPaint[1].setAntiAlias(true);
+            promptCancelPaint[1].setARGB(80, color, color - offset, color - offset);
+            
+            promptCancelPaint[2] = new Paint();
+            promptCancelPaint[2].setAntiAlias(true);
+            promptCancelPaint[2].setARGB(80, color, color - offset, color - offset);
+
+            promptCancelBorderPaint = new Paint[3];
+            promptCancelBorderPaint[1] = new Paint();
+            promptCancelBorderPaint[1].setAntiAlias(true);
+            promptCancelBorderPaint[1].setARGB(120, color, color - offset, color - offset);
+            promptCancelBorderPaint[1].setStyle(Paint.Style.STROKE);
+            promptCancelBorderPaint[1].setStrokeWidth(5);
+            
+            promptCancelBorderPaint[2] = new Paint();
+            promptCancelBorderPaint[2].setAntiAlias(true);
+            promptCancelBorderPaint[2].setARGB(120, color, color - offset, color - offset);
+            promptCancelBorderPaint[2].setStyle(Paint.Style.STROKE);
+            promptCancelBorderPaint[2].setStrokeWidth(5);
+}
     }
     
     public void resetValues(float scale, boolean bumpDotRadius) {
@@ -538,6 +590,16 @@ public class Theme {
 //        {
 //            canvas.drawRect(sideRect, theme.sideBorderPaint[2]);
 //        }
+    }
+    
+    public void drawOKPrompt(Canvas canvas, RectF rect, int p) {
+        canvas.drawRect(rect, promptOKPaint[p]);
+        canvas.drawRect(rect, promptOKBorderPaint[p]);
+    }
+    
+    public void drawCancelPrompt(Canvas canvas, RectF rect, int p) {
+        canvas.drawRect(rect, promptCancelPaint[p]);
+        canvas.drawRect(rect, promptCancelBorderPaint[p]);
     }
     
     public void drawAreaLine(Canvas canvas, float[] point1, float[] point2) {

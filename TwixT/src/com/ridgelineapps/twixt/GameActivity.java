@@ -28,6 +28,7 @@ import net.schwagereit.t1j.Zobrist;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
@@ -56,6 +57,8 @@ public class GameActivity extends Activity implements OnTouchListener{
     int aiPlayer = 1;
     
     int[] lastBoardPoint;
+    
+    boolean confirmPegPlacement = true;
     
     public static final int TOUCH_OFFSET = 150;
     public long aiStartTurn;
@@ -234,6 +237,22 @@ public class GameActivity extends Activity implements OnTouchListener{
         float x = event.getX();
         float y = event.getY();
         
+        if(view.confirmActive) {
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(view.getOKBounds(board.turn, 0).contains(x, y)) {
+                    view.confirmActive = false;
+                    board.hideCursor();
+                    addPeg(lastBoardPoint[0], lastBoardPoint[1]);
+                    cleanupPegDrawing();
+                }
+                if(view.getCancelBounds(board.turn, 0).contains(x, y)) {
+                    view.confirmActive = false;
+                    cleanupPegDrawing();
+                }
+            }
+            return true;            
+        }
+        
         if(touchOffset != null && board != null) {
             x += touchOffset.x;
             y += touchOffset.y;
@@ -264,16 +283,22 @@ public class GameActivity extends Activity implements OnTouchListener{
             if(lastBoardPoint != null) {
                 // Handle moving off the screen, is there a better way?
                 if(view.isYWithinBounds(event.getY())) {
-                    int[] boardPoint = lastBoardPoint; // Use the last location from move rather from this event since the UI shows that location as the peg placement.
-                    board.hideCursor();
-                    addPeg(boardPoint[0], boardPoint[1]);
-                    cleanupPegDrawing();
+                    if(confirmPegPlacement) {
+                        view.confirmActive = true;
+                        view.invalidate();
+                    }
+                    else {
+                        int[] boardPoint = lastBoardPoint; // Use the last location from move rather from this event since the UI shows that location as the peg placement.
+                        board.hideCursor();
+                        addPeg(boardPoint[0], boardPoint[1]);
+                        cleanupPegDrawing();
+                        lastBoardPoint = null;
+                    }
                 } else {
                     cleanupPegDrawing();
+                    lastBoardPoint = null;
                 }
             }
-            
-            lastBoardPoint = null;
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
             if(board.winner == 0) {

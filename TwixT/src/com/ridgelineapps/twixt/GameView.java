@@ -61,6 +61,8 @@ public class GameView extends View {
     float board_y1;
     float board_x2;
     float board_y2;
+    
+    boolean confirmActive = false;
 
     public GameView(Context context, MyBoard board, Theme theme) {
         super(context);
@@ -86,6 +88,13 @@ public class GameView extends View {
     	theme.drawBoard(canvas, new RectF(board_x1, board_y1, board_x2, board_y2), scale);
         
         if(board.winner == 0) {
+            if(confirmActive) {
+                RectF bounds = getOKBounds(board.turn, 0);
+                theme.drawOKPrompt(canvas, bounds, board.turn);                
+                bounds = getCancelBounds(board.turn, 0);
+                theme.drawCancelPrompt(canvas, bounds, board.turn);                
+            }
+            
             RectF bounds = getPromptBounds(board.turn, 0);
             theme.drawPrompt(canvas, bounds, board.turn);
         }
@@ -387,6 +396,62 @@ public class GameView extends View {
             return new RectF(board_x1 - scale * 2, yMargin - offset, board_x1 - xMargin + offset, height - yMargin + offset);
         }
         return new RectF(board_x2 + xMargin - offset, yMargin - offset, board_x2 + scale * 2, height - yMargin + offset);
+    }
+    
+    public RectF getOKBounds(int player, int offset) {
+        float[] zero_zero = translateToScreen(0, 0);
+        float[] one_one = translateToScreen(1, 1); 
+        float[] last_last = translateToScreen(board.size - 1, board.size - 1);
+        float[] lastminusone_lastminusone = translateToScreen(board.size - 2, board.size - 2);
+        
+        float board_x1 = zero_zero[0] - (one_one[0] - zero_zero[0]) * 3;
+        float board_x2 = last_last[0] + (last_last[0] - lastminusone_lastminusone[0]) * 3;
+
+        int yMargin = (int) (height * 0.265f);
+        int xMargin = (int) (10); //board_x1 * 0.265f);
+        
+//        if(!drawSides) 
+        {
+            yMargin = (int) (border + scale * 4);
+            xMargin = 5;
+        }
+
+//        if(player == 1) {
+//            return new RectF(xMargin - offset, yMargin - offset, board_x1 - xMargin / 3 + offset, height - yMargin + offset);
+//        }
+//        return new RectF(board_x2 + xMargin / 3 - offset, yMargin - offset, width - xMargin + offset, height - yMargin + offset);
+        if (player == 1) {
+            return new RectF(board_x1 - scale * 4, height / 2 + 3, board_x1 - xMargin + offset, height - yMargin + offset);
+        }
+        return new RectF(board_x2 + xMargin - offset, yMargin - offset, board_x2 + scale * 4, height / 2 - 3);
+    }
+    
+    public RectF getCancelBounds(int player, int offset) {
+        float[] zero_zero = translateToScreen(0, 0);
+        float[] one_one = translateToScreen(1, 1); 
+        float[] last_last = translateToScreen(board.size - 1, board.size - 1);
+        float[] lastminusone_lastminusone = translateToScreen(board.size - 2, board.size - 2);
+        
+        float board_x1 = zero_zero[0] - (one_one[0] - zero_zero[0]) * 3;
+        float board_x2 = last_last[0] + (last_last[0] - lastminusone_lastminusone[0]) * 3;
+
+        int yMargin = (int) (height * 0.265f);
+        int xMargin = (int) (10); //board_x1 * 0.265f);
+        
+//        if(!drawSides) 
+        {
+            yMargin = (int) (border + scale * 4);
+            xMargin = 5;
+        }
+
+//        if(player == 1) {
+//            return new RectF(xMargin - offset, yMargin - offset, board_x1 - xMargin / 3 + offset, height - yMargin + offset);
+//        }
+//        return new RectF(board_x2 + xMargin / 3 - offset, yMargin - offset, width - xMargin + offset, height - yMargin + offset);
+        if (player == 1) {
+            return new RectF(board_x1 - scale * 4, yMargin - offset, board_x1 - xMargin + offset, height / 2 - 3);
+        }
+        return new RectF(board_x2 + xMargin - offset, height / 2 + 3, board_x2 + scale * 4, height - yMargin + offset);
     }
     
     public int[] translateToBoard(float x, float y) {
